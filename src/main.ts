@@ -1,4 +1,5 @@
 import {bootstrap} from 'ng-forward';
-import {App} from './app/app.component';
+import './assets/styles/styles.scss';
+import {AppComponent} from './app/app.component';
 
-bootstrap(App, []);
+bootstrap(AppComponent, []);

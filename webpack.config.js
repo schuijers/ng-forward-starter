@@ -94,6 +94,12 @@ module.exports = function makeWebpackConfig() {
       // Compiles TypeScript into ES5 code
       test: /\.ts$/,
       loader: 'ts'
+    }, {
+      // SASS LOADER
+      // Reference: https://github.com/jtangelder/sass-loader
+      // Compiles Sass into CSS
+      test: /\.scss$/,
+      loaders: ["style", "css", "sass"]
     }]
   };
 
