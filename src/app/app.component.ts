@@ -1,10 +1,8 @@
 import './app.component.scss';
-import {Component} from 'ng-forward';
 
-export class Hero {
-  id: number;
-  name: string;
-}
+import { Component } from 'ng-forward';
+import { Hero } from './hero';
+import { HeroDetailComponent } from './hero-detail.component';
 
 @Component({
   selector: 'app',
@@ -14,25 +12,15 @@ export class Hero {
       <h1>{{ctrl.title}}</h1>
       <h2>My Heroes</h2>
       <ul class="heroes">
-        <li ng-repeat="hero in ctrl.heroes" ng-click="ctrl.onSelect(hero)" ng-class="{'selected': ctrl.selectedHero === hero}">
+        <li ng-repeat="hero in ctrl.heroes" (click)="ctrl.onSelect(hero)" ng-class="{'selected': ctrl.selectedHero === hero}">
           <span class="badge">{{hero.id}}</span> {{hero.name}}
         </li>
       </ul>
-      <div ng-if="ctrl.selectedHero">
-        <h2>{{ctrl.selectedHero.name}} details!</h2>
-        <div>
-          <label>id: </label>{{ctrl.selectedHero.id}}
-        </div>
-        <div>
-          <label>name: </label>
-          <input ng-model="ctrl.selectedHero.name" placeholder="name">
-        </div>
-      </div>
+      <my-hero-detail [hero]="ctrl.selectedHero"></my-hero-detail>
     </div>
   `,
-  directives: []
+  directives: [HeroDetailComponent]
 })
-
 export class AppComponent {
   title: string = 'Tour of Heroes';
   selectedHero: Hero;
