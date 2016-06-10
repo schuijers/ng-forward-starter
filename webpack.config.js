@@ -27,9 +27,9 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? {} : {
-    app: './src/main.ts',
-    polyfills: './src/polyfills.ts',
-    vendor: './src/vendor.ts'
+    app: './src/app/main.ts',
+    polyfills: './src/app/polyfills.ts',
+    vendor: './src/app/vendor.ts'
   };
 
   /**
