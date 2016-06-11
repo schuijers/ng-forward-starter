@@ -1,12 +1,13 @@
 import './app.component.scss';
 
-import { Component } from 'ng-forward';
+import { Component, Inject } from 'ng-forward';
 import { Hero } from './hero';
 import { HeroDetailComponent } from './hero-detail.component';
+import { HeroService } from './hero.service';
 
 @Component({
   selector: 'app',
-  providers: [],
+  providers: [HeroService],
   template: `
     <div class="app-component">
       <h1>{{ctrl.title}}</h1>
@@ -21,26 +22,24 @@ import { HeroDetailComponent } from './hero-detail.component';
   `,
   directives: [HeroDetailComponent]
 })
+@Inject(HeroService)
 export class AppComponent {
   title: string = 'Tour of Heroes';
   selectedHero: Hero;
+  heroes: Hero[];
 
-  public heroes: Hero[] = HEROES;
+  constructor(private heroService: HeroService) {
+  }
 
-  onSelect(hero: Hero) {
+  ngOnInit(): void {
+    this.getHeroes();
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+  }
+
+  onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
 }
-
-var HEROES: Hero[] = [
-  { "id": 11, "name": "Mr. Nice" },
-  { "id": 12, "name": "Narco" },
-  { "id": 13, "name": "Bombasto" },
-  { "id": 14, "name": "Celeritas" },
-  { "id": 15, "name": "Magneta" },
-  { "id": 16, "name": "RubberMan" },
-  { "id": 17, "name": "Dynama" },
-  { "id": 18, "name": "Dr IQ" },
-  { "id": 19, "name": "Magma" },
-  { "id": 20, "name": "Tornado" }
-];
