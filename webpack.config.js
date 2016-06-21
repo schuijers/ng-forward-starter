@@ -1,7 +1,9 @@
 'use strict';
 
 var webpack = require('webpack');
+var path = require('path');
 var failPlugin = require('webpack-fail-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
@@ -65,7 +67,7 @@ module.exports = function makeWebpackConfig() {
   } else if (isProd) {
     config.devtool = 'source-map';
   } else {
-    config.devtool = 'eval-source-map';
+    config.devtool = 'source-map';//'eval-source-map';
   }
 
   /**
@@ -99,7 +101,19 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/jtangelder/sass-loader
       // Compiles Sass into CSS
       test: /\.scss$/,
-      loaders: ["style", "css", "sass"]
+      loaders: ['style', 'css?sourceMap', 'resolve-url', 'sass?sourceMap']
+      // loader: ExtractTextPlugin.extract(
+      //   'style', 
+      //   'css?sourceMap', 
+      //   'resolve-url',
+      //   'sass?sourceMap'
+      // )
+    }, {
+      // HTML LOADER
+      // Reference: https://github.com/webpack/html-loader
+      // Exports HTML as a string
+      test: /\.html$/,
+      loader: 'html'
     }]
   };
 
@@ -110,6 +124,7 @@ module.exports = function makeWebpackConfig() {
    */
   config.plugins = [
     failPlugin,
+    new ExtractTextPlugin("styles.css"),
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     })

@@ -1,0 +1,45 @@
+.c-dashboard {
+  *, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  &__module {
+    padding: 20px;
+    text-align: center;
+    color: #eee;
+    max-height: 120px;
+    min-width: 120px;
+    background-color: #607D8B;
+    border-radius: 2px;
+
+    &:hover {
+      background-color: #EEE;
+      cursor: pointer;
+      color: #607d8b;
+    }
+  }
+
+  &__module-title {
+    position: relative;
+  }
+  
+  @media (max-width: 600px) {
+    &__module {
+      font-size: 10px;
+      max-height: 75px; 
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    &__module {
+      min-width: 60px;
+    }
+  }
+}

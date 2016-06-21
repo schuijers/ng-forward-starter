@@ -1,0 +1,11 @@
+<div class="c-hero-detail" ng-if="ctrl.hero">
+  <h2>{{ctrl.hero.name}} details!</h2>
+  <div>
+    <label class="c-hero-detail__label">id: </label>{{ctrl.hero.id}}
+  </div>
+  <div>
+    <label class="c-hero-detail__label">name: </label>
+    <input class="c-hero-detail__input" ng-model="ctrl.hero.name" placeholder="name">
+  </div>
+  <button class="c-hero-detail__btn-back" (click)="ctrl.goBack()">Back</button>
+</div>

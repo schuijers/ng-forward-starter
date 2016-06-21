@@ -1,0 +1,17 @@
+<div>
+  <h2>My Heroes</h2>
+  <ul class="c-heroes">
+    <li class="c-heroes__item"
+        ng-repeat="hero in ctrl.heroes"
+        (click)="ctrl.onSelect(hero)"
+        ng-class="{'c-heroes__item--selected': ctrl.selectedHero === hero}">
+      <span class="c-heroes__badge">{{hero.id}}</span> {{hero.name}}
+    </li>
+  </ul>
+  <div ng-if="ctrl.selectedHero">
+    <h2>
+      {{ctrl.selectedHero.name | uppercase}} is my hero
+    </h2>
+    <button (click)="ctrl.gotoDetail()">View Details</button>
+  </div>
+</div>

@@ -1,45 +1,30 @@
 import './app.component.scss';
 
-import { Component, Inject } from 'ng-forward';
-import { Hero } from './hero';
-import { HeroDetailComponent } from './hero-detail.component';
-import { HeroService } from './hero.service';
+import { Component, StateConfig } from 'ng-forward';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HeroService } from './services/hero.service';
+import { HeroesComponent } from './components/heroes/heroes.component';
+import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 
 @Component({
-  selector: 'app',
-  providers: [HeroService],
+  selector: 'my-app',
   template: `
-    <div class="app-component">
-      <h1>{{ctrl.title}}</h1>
-      <h2>My Heroes</h2>
-      <ul class="heroes">
-        <li ng-repeat="hero in ctrl.heroes" (click)="ctrl.onSelect(hero)" ng-class="{'selected': ctrl.selectedHero === hero}">
-          <span class="badge">{{hero.id}}</span> {{hero.name}}
-        </li>
-      </ul>
-      <my-hero-detail [hero]="ctrl.selectedHero"></my-hero-detail>
+    <div class="c-app">
+      <h1 class="c-app__header">{{ctrl.title}}</h1>
+      <nav>
+        <a class="c-app__nav-item" ui-sref="Dashboard" ui-sref-active="c-app__nav-item--active">Dashboard</a>
+        <a class="c-app__nav-item" ui-sref="Heroes" ui-sref-active="c-app__nav-item--active">Heroes</a>
+      </nav>
+      <ui-view></ui-view>
     </div>
   `,
-  directives: [HeroDetailComponent]
+  providers: [HeroService]
 })
-@Inject(HeroService)
+@StateConfig([
+  { name: 'Dashboard', url: '/dashboard', component: DashboardComponent },
+  { name: 'Heroes', url: '/heroes', component: HeroesComponent },
+  { name: 'HeroDetail', url: '/detail/:id', component: HeroDetailComponent }
+])
 export class AppComponent {
   title: string = 'Tour of Heroes';
-  selectedHero: Hero;
-  heroes: Hero[];
-
-  constructor(private heroService: HeroService) {
-  }
-
-  ngOnInit(): void {
-    this.getHeroes();
-  }
-
-  getHeroes(): void {
-    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
-  }
-
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }
 }
