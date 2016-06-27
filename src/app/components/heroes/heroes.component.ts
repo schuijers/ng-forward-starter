@@ -15,8 +15,10 @@ import { HeroService } from '../../services/hero.service';
 @Inject('$state', HeroService)
 export class HeroesComponent {
   title: string = 'Tour of Heroes';
+  addingHero: boolean = false;
   selectedHero: Hero;
   heroes: Hero[];
+  error: any = null;
 
   constructor(private $state: IStateService, private heroService: HeroService) {
   }
@@ -29,8 +31,36 @@ export class HeroesComponent {
     this.heroService.getHeroes().then(heroes => this.heroes = heroes);
   }
 
+  addHero() {
+    this.addingHero = true;
+    this.selectedHero = null;
+  }
+
+  delete(hero: Hero, event: any) {
+    event.stopPropagation();
+    
+    this.heroService
+      .delete(hero)
+      .then(res => {
+        this.heroes = this.heroes.filter(h => h !== hero);
+        
+        if (this.selectedHero === hero) {
+          this.selectedHero = null;
+        }
+      })
+      .catch(error => this.error = error); // TODO: Display error message
+  }
+
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
+  }
+
+  close(savedHero: Hero) {
+    this.addingHero = false;
+
+    if (savedHero) { 
+      this.getHeroes();
+    }
   }
 
   gotoDetail() {

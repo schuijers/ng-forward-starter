@@ -1,6 +1,6 @@
 import './hero-detail.component.scss';
 
-import { Component, Inject, Input } from 'ng-forward';
+import { Component, EventEmitter, Inject, Input, Output } from 'ng-forward';
 import { IStateParamsService } from 'angular-ui-router';
 import { Hero } from '../../models/hero';
 import { HeroService } from '../../services/hero.service';
@@ -11,7 +11,10 @@ import { HeroService } from '../../services/hero.service';
 })
 @Inject('$stateParams', HeroService)
 export class HeroDetailComponent {
-  hero: Hero;
+  @Input() hero: Hero;
+  @Output() close = new EventEmitter();
+  error: any;
+  navigated = false; // true if navigated here
 
   constructor(
     private $stateParams: IStateParamsService,
@@ -19,11 +22,31 @@ export class HeroDetailComponent {
   }
 
   ngOnInit(): void {
-    let id = +this.$stateParams['id'];
-    this.heroService.getHero(id).then(hero => this.hero = hero);
+    if (this.$stateParams['id']) {
+      let id = +this.$stateParams['id'];
+      this.navigated = true;
+      this.heroService.getHero(id).then(hero => this.hero = hero);
+    } else {
+      this.navigated = false;
+      this.hero = new Hero();
+    }
   }
 
-  goBack() {
-    window.history.back();
+  save() {
+    this.heroService
+      .save(this.hero)
+      .then(hero => {
+        this.hero = hero; // saved hero, w/ id if new
+        this.goBack(hero);
+      })
+      .catch(error => this.error = error); // TODO: Display error message
+  }
+
+  goBack(savedHero: Hero = null) {
+    this.close.next(savedHero);
+    
+    if (this.navigated) { 
+      window.history.back(); 
+    }
   }
 }
