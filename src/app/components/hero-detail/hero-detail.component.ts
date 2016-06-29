@@ -1,6 +1,7 @@
 import './hero-detail.component.scss';
 
 import { Component, EventEmitter, Inject, Input, Output } from 'ng-forward';
+import { ILocationService } from 'angular';
 import { IStateParamsService } from 'angular-ui-router';
 import { Hero } from '../../models/hero';
 import { HeroService } from '../../services/hero.service';
@@ -9,7 +10,7 @@ import { HeroService } from '../../services/hero.service';
   selector: 'my-hero-detail',
   template: require('./hero-detail.component.html')
 })
-@Inject('$stateParams', HeroService)
+@Inject('$location', '$stateParams', HeroService)
 export class HeroDetailComponent {
   @Input() hero: Hero;
   @Output() close = new EventEmitter();
@@ -17,6 +18,7 @@ export class HeroDetailComponent {
   navigated = false; // true if navigated here
 
   constructor(
+    private $location: ILocationService,
     private $stateParams: IStateParamsService,
     private heroService: HeroService) {
   }
@@ -30,6 +32,10 @@ export class HeroDetailComponent {
       this.navigated = false;
       this.hero = new Hero();
     }
+  }
+
+  ngOnDestroy() {
+    this.$stateParams['id'] = null;
   }
 
   save() {

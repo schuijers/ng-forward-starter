@@ -2,9 +2,7 @@ import { IPromise, IQService } from 'angular';
 import { Inject } from 'ng-forward';
 import { Hero } from '../models/hero';
 
-@Inject('$q')
-@Inject('API_BASE')
-@Inject('SEED_DATA')
+@Inject('$q', 'API_BASE', 'SEED_DATA')
 export class InMemoryBackendService {
   private database: any;
 

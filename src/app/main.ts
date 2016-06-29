@@ -6,7 +6,7 @@ import { InMemoryBackendService } from './services/in-memory-backend.service';
 import { InMemoryDataService } from './services/in-memory-data.service';
 
 bootstrap(AppComponent, [
-  'ui.router', 
+  'ui.router',
   config.name,
   provide('API_BASE', { useConstant: 'app/' }),
   provide('SEED_DATA', { useClass: InMemoryDataService }),
