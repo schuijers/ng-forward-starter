@@ -67,7 +67,7 @@ module.exports = function makeWebpackConfig() {
   } else if (isProd) {
     config.devtool = 'source-map';
   } else {
-    config.devtool = 'source-map';//'eval-source-map';
+    config.devtool = 'eval-source-map';
   }
 
   /**
@@ -101,7 +101,7 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/jtangelder/sass-loader
       // Compiles Sass into CSS
       test: /\.scss$/,
-      loaders: ['style', 'css?sourceMap', 'resolve-url', 'sass?sourceMap']
+      loaders: ['style', 'css', 'resolve-url', 'sass']
       // loader: ExtractTextPlugin.extract(
       //   'style', 
       //   'css?sourceMap', 

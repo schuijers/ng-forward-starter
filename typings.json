@@ -1,9 +1,9 @@
 {
   "globalDevDependencies": {
-    "angular": "registry:dt/angular#1.5.0+20160602160139",
+    "angular": "registry:dt/angular#1.5.0+20160627105203",
     "angular-ui-router": "registry:dt/angular-ui-router#1.1.5+20160521151413",
     "core-js": "registry:dt/core-js#0.0.0+20160602141332",
-    "jquery": "registry:dt/jquery#1.10.0+20160417213236",
-    "node": "registry:dt/node#6.0.0+20160613154055"
+    "jquery": "registry:dt/jquery#1.10.0+20160628074423",
+    "node": "registry:dt/node#6.0.0+20160621231320"
   }
 }
